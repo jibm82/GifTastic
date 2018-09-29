@@ -1,10 +1,10 @@
 var topics = [
+  "Pet Shop Boys",
+  "Tears for Fears",
+  "Megadeth",
+  "Judas Priest",
   "Michael Jackson",
-  "Prince",
-  "Queen",
-  "George Michael",
-  "David Bowie",
-  "The Police",
+  "Peter Gabriel",
   "Van Halen"
 ];
 
@@ -45,7 +45,7 @@ var app = {
       app.settings.currentTopic = $(this).attr("data-topic") + "+music";
       app.settings.currentOffset = 0;
 
-      $(".gif").remove();
+      $(".card").remove();
 
       app.searchGifs();
     });
@@ -117,13 +117,31 @@ var app = {
     var stillImage = data.images.original_still.url;
     var originalImage = data.images.original.url;
 
-    var gif = $("<img>");
-    gif.addClass("gif");
-    gif.attr("data-original", originalImage);
-    gif.attr("data-still", stillImage);
-    gif.attr("src", stillImage);
+    var gifCard = $("<div>").addClass("card");
 
-    $("#gifs").append(gif);
+    var img = $("<img>")
+      .addClass("gif card-img-top")
+      .attr("data-original", originalImage)
+      .attr("data-still", stillImage)
+      .attr("src", stillImage);
+
+    gifCard.append(img);
+
+    var cardBody = $("<div>").addClass("card-body");
+
+    var cardTitle = $("<h6>")
+      .addClass("card-title text-center")
+      .text(data.title);
+
+    var rating = $("<p>")
+      .addClass("text-center")
+      .text("Rating " + data.rating);
+
+    cardBody.append(cardTitle);
+    cardBody.append(rating);
+    gifCard.append(cardBody);
+
+    $("#gifs").append(gifCard);
   }
 };
 
