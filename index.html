@@ -6,21 +6,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>GifTastic</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-    crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/font-hack/2.020/css/hack.min.css'>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap4-neon-glow.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 
 <body>
-  <div class="container">
-    <section id="topics"></section>
-    <section id="gifs" class="card-columns">
-    </section>
-    <section id="controls">
-      <button id="more">More</button>
-      <button id="play-all">Play all</button>
-      <button id="stop-all">Stop all</button>
-    </section>
-  </div>
+  <div id="background"></div>
+  <header>
+
+  </header>
+  <main role="main">
+
+    <div class="container">
+      <section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">Giftastic - Super Heroes</h1>
+          <p class="text-mono">Search for GIFs of your favorite super heroes</p>
+        </div>
+      </section>
+
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-header">
+              List of characters
+            </div>
+            <div class="card-body">
+              <h6>Click on a character to retrieve info</h6>
+              <section id="characters" class="mb-4"></section>
+              <hr />
+              <h6 class="text-mono">Add a new character</h6>
+              <form id="characterForm">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="characterName" placeholder="Enter name...">
+                </div>
+                <button type="submit" class="btn btn-success btn-shadow">Add to the list</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              GIF Controls
+            </div>
+            <div class="card-body">
+              <section id="controls">
+                <button id="more" class="btn btn-outline-success btn-block">Load More</button>
+                <button id="play-all" class="btn btn-outline-success btn-block">Play all</button>
+                <button id="stop-all" class="btn btn-outline-success btn-block">Stop all</button>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-9">
+          <section id="bio">
+            <h2>Bio</h2>
+            <div class="bio-error"></div>
+            <div class="row">
+              <div class="col-md-9">
+                <p>Name: <span id="bio-name"></span></p>
+                <p>Place of birth: <span id="bio-place-of-birth"></span></p>
+                <p>Alignment: <span id="bio-alignment"></span></p>
+              </div>
+            </div>
+          </section>
+          <h2>GIFs</h2>
+          <section id="gifs" class="card-columns">
+          </section>
+        </div>
+      </div>
+
+
+
+    </div>
+  </main>
+
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"

@@ -1,53 +1,68 @@
-var topics = [
-  "Pet Shop Boys",
-  "Tears for Fears",
-  "Megadeth",
-  "Judas Priest",
-  "Michael Jackson",
-  "Peter Gabriel",
-  "Van Halen"
+var characters = [
+  "Black Widow",
+  "Spider-man",
+  "Iron man",
+  "The Hulk",
+  "Captain America",
+  "Thor"
 ];
 
 var app = {
   settings: {
     apiKey: "NTHeqM2633S1tOUHW5WcR9E2TVwzpVrG",
-    baseUrl: "http://api.giphy.com/v1/gifs/search",
-    searchLimit: 10,
-    currentTopic: "",
-    currentOffset: 0
+    superHeroApiUrl: "http://superheroapi.com/api/10209881724519328/search/",
+    currentCharacter: "",
+    gifSearchBaseUrl: "http://api.giphy.com/v1/gifs/search",
+    gifSearchCurrentOffset: 0,
+    gifSearchLimit: 10
   },
 
   new: function() {
-    this.appendInitialTopicButtons();
-    this.bindTopicButtonsClick();
+    this.appendInitialCharacterButtons();
+    this.bindCharacterButtonsClick();
+    this.bindCharacterFormSubmit();
     this.bindGifClick();
     this.bindGlobalGifActions();
   },
 
-  appendInitialTopicButtons: function() {
-    topics.forEach(function(topic) {
-      app.appendTopicButton(topic);
+  appendInitialCharacterButtons: function() {
+    characters.forEach(function(character) {
+      app.appendCharacterButton(character);
     });
   },
 
-  appendTopicButton: function(topic) {
-    var button = $("<button>");
+  appendCharacterButton: function(character) {
+    var button = $("<button>")
+      .attr("data-character", character)
+      .addClass("btn btn-success m-1 character")
+      .text(character);
 
-    button.attr("data-topic", topic.trim());
-    button.addClass("topic");
-    button.text(topic);
-
-    $("#topics").append(button);
+    $("#characters").append(button);
   },
 
-  bindTopicButtonsClick: function() {
-    $(document).on("click", ".topic", function() {
-      app.settings.currentTopic = $(this).attr("data-topic") + "+music";
-      app.settings.currentOffset = 0;
+  bindCharacterButtonsClick: function() {
+    $(document).on("click", ".character", function() {
+      app.settings.currentCharacter = $(this).attr("data-character");
+      app.settings.gifSearchCurrentOffset = 0;
 
-      $(".card").remove();
+      $(".gifCard").remove();
 
+      app.searchBio();
       app.searchGifs();
+    });
+  },
+
+  bindCharacterFormSubmit: function() {
+    $("#characterForm").submit(function(e) {
+      e.preventDefault();
+
+      var newCharacter = $("#characterName")
+        .val()
+        .trim();
+
+      app.appendCharacterButton(newCharacter);
+
+      $("#characterName").val("");
     });
   },
 
@@ -86,30 +101,51 @@ var app = {
     });
   },
 
+  searchBio: function() {
+    var url = app.settings.superHeroApiUrl + app.settings.currentCharacter;
+
+    $.ajax({
+      method: "GET",
+      url: url
+    }).then(function(response) {
+      if (typeof response.resultss === Array) {
+      }
+
+      app.updateBioInfo(response.results[0]);
+    });
+  },
+
+  updateBioInfo: function(data) {
+    console.log(data.biography);
+    $("#bio-name").text(data.biography["full-name"]);
+    $("#bio-place-of-birth").text(data.biography["place-of-birth"]);
+    $("#bio-alignment").text(data.biography.alignment);
+  },
+
   searchGifs: function() {
     $.ajax({
       method: "GET",
-      url: this.topicSearchUrl()
+      url: this.gifSearchUrl()
     }).then(function(response) {
       response.data.forEach(function(data) {
         app.appendGif(data);
       });
 
-      app.settings.currentOffset += app.settings.searchLimit;
+      app.settings.gifSearchCurrentOffset += app.settings.gifSearchLimit;
     });
   },
 
-  topicSearchUrl: function() {
+  gifSearchUrl: function() {
     return (
-      this.settings.baseUrl +
+      this.settings.gifSearchBaseUrl +
       "?api_key=" +
       this.settings.apiKey +
       "&q=" +
-      this.settings.currentTopic +
+      this.settings.currentCharacter +
       "&limit=" +
-      this.settings.searchLimit +
+      this.settings.gifSearchLimit +
       "&offset=" +
-      this.settings.currentOffset
+      this.settings.gifSearchCurrentOffset
     );
   },
 
@@ -117,7 +153,7 @@ var app = {
     var stillImage = data.images.original_still.url;
     var originalImage = data.images.original.url;
 
-    var gifCard = $("<div>").addClass("card");
+    var gifCard = $("<div>").addClass("card gifCard");
 
     var img = $("<img>")
       .addClass("gif card-img-top")
@@ -129,15 +165,14 @@ var app = {
 
     var cardBody = $("<div>").addClass("card-body");
 
-    var cardTitle = $("<h6>")
-      .addClass("card-title text-center")
-      .text(data.title);
-
     var rating = $("<p>")
-      .addClass("text-center")
-      .text("Rating " + data.rating);
+      .addClass("text-center mb-0")
+      .append(
+        $("<span>")
+          .addClass("badge badge-light")
+          .text("Rating: " + data.rating)
+      );
 
-    cardBody.append(cardTitle);
     cardBody.append(rating);
     gifCard.append(cardBody);
 
