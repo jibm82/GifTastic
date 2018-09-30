@@ -18,6 +18,7 @@ var app = {
   },
 
   new: function() {
+    $("#gifControls").hide();
     this.appendInitialCharacterButtons();
     this.bindCharacterButtonsClick();
     this.bindCharacterFormSubmit();
@@ -47,7 +48,6 @@ var app = {
 
       $(".gifCard").remove();
 
-      app.searchBio();
       app.searchGifs();
     });
   },
@@ -101,28 +101,8 @@ var app = {
     });
   },
 
-  searchBio: function() {
-    var url = app.settings.superHeroApiUrl + app.settings.currentCharacter;
-
-    $.ajax({
-      method: "GET",
-      url: url
-    }).then(function(response) {
-      if (typeof response.resultss === Array) {
-      }
-
-      app.updateBioInfo(response.results[0]);
-    });
-  },
-
-  updateBioInfo: function(data) {
-    console.log(data.biography);
-    $("#bio-name").text(data.biography["full-name"]);
-    $("#bio-place-of-birth").text(data.biography["place-of-birth"]);
-    $("#bio-alignment").text(data.biography.alignment);
-  },
-
   searchGifs: function() {
+    $("#gifControls").hide();
     $.ajax({
       method: "GET",
       url: this.gifSearchUrl()
@@ -132,6 +112,7 @@ var app = {
       });
 
       app.settings.gifSearchCurrentOffset += app.settings.gifSearchLimit;
+      $("#gifControls").show();
     });
   },
 
@@ -163,7 +144,7 @@ var app = {
 
     gifCard.append(img);
 
-    var cardBody = $("<div>").addClass("card-body");
+    var cardFooter = $("<div>").addClass("card-footer");
 
     var rating = $("<p>")
       .addClass("text-center mb-0")
@@ -173,8 +154,8 @@ var app = {
           .text("Rating: " + data.rating)
       );
 
-    cardBody.append(rating);
-    gifCard.append(cardBody);
+    cardFooter.append(rating);
+    gifCard.append(cardFooter);
 
     $("#gifs").append(gifCard);
   }
