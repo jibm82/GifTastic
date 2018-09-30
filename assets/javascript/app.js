@@ -35,7 +35,7 @@ var app = {
   appendCharacterButton: function(character) {
     var button = $("<button>")
       .attr("data-character", character)
-      .addClass("btn btn-success m-1 character")
+      .addClass("btn btn-primary m-1 character")
       .text(character);
 
     $("#characters").append(button);
@@ -60,7 +60,11 @@ var app = {
         .val()
         .trim();
 
-      app.appendCharacterButton(newCharacter);
+      if (newCharacter !== "") {
+        app.appendCharacterButton(newCharacter);
+      } else {
+        alert("Error: No name provided");
+      }
 
       $("#characterName").val("");
     });

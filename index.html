@@ -14,14 +14,9 @@
 </head>
 
 <body>
-  <div id="background"></div>
-  <header>
-
-  </header>
   <main role="main">
-
     <div class="container">
-      <section class="jumbotron text-center">
+      <section class="jumbotron text-center mt-4">
         <div class="container">
           <h1 class="jumbotron-heading">Giftastic - Super Heroes</h1>
           <p class="text-mono">Search for GIFs of your favorite super heroes</p>
@@ -43,38 +38,24 @@
                 <div class="form-group">
                   <input type="text" class="form-control" id="characterName" placeholder="Enter name...">
                 </div>
-                <button type="submit" class="btn btn-success btn-shadow">Add to the list</button>
+                <button type="submit" class="btn btn-danger btn-shadow">Add to the list</button>
               </form>
             </div>
           </div>
 
-          <div class="card">
+          <section id="gifControls" class="card">
             <div class="card-header">
               GIF Controls
             </div>
             <div class="card-body">
-              <section id="controls">
-                <button id="more" class="btn btn-outline-success btn-block">Load More</button>
-                <button id="play-all" class="btn btn-outline-success btn-block">Play all</button>
-                <button id="stop-all" class="btn btn-outline-success btn-block">Stop all</button>
-              </section>
+              <button id="more" class="btn btn-outline-success btn-block">Load More</button>
+              <button id="play-all" class="btn btn-outline-success btn-block">Play all</button>
+              <button id="stop-all" class="btn btn-outline-success btn-block">Stop all</button>
             </div>
-          </div>
+          </section>
         </div>
 
         <div class="col-md-9">
-          <section id="bio">
-            <h2>Bio</h2>
-            <div class="bio-error"></div>
-            <div class="row">
-              <div class="col-md-9">
-                <p>Name: <span id="bio-name"></span></p>
-                <p>Place of birth: <span id="bio-place-of-birth"></span></p>
-                <p>Alignment: <span id="bio-alignment"></span></p>
-              </div>
-            </div>
-          </section>
-          <h2>GIFs</h2>
           <section id="gifs" class="card-columns">
           </section>
         </div>
