@@ -12,7 +12,7 @@ var app = {
     apiKey: "NTHeqM2633S1tOUHW5WcR9E2TVwzpVrG",
     superHeroApiUrl: "http://superheroapi.com/api/10209881724519328/search/",
     currentCharacter: "",
-    gifSearchBaseUrl: "http://api.giphy.com/v1/gifs/search",
+    gifSearchBaseUrl: "https://api.giphy.com/v1/gifs/search",
     gifSearchCurrentOffset: 0,
     gifSearchLimit: 10
   },
